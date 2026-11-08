@@ -261,21 +261,21 @@ at.innerHTML=hh;document.body.appendChild(at);
 var K=0;try{K=(+localStorage.getItem('liq')||0)%3}catch(e){}
 var g=c.getContext('webgl',{alpha:!1,antialias:!1,powerPreference:'low-power',depth:!1,stencil:!1});
 if(g){
-var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}',fs='#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\nuniform vec2 r,m;uniform float t,s,b,k;\nfloat h(vec2 p){float a=0.,w=.5;for(int i=0;i<4;i++){a+=w*sin(p.x+sin(p.y*1.3+t*.4))*cos(p.y-sin(p.x*.8-t*.3));p=mat2(1.6,1.2,-1.2,1.6)*p;w*=.5;}return a;}\nfloat hs(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}\nvoid main(){vec2 u0=(gl_FragCoord.xy-.5*r)/r.y,u=u0+vec2(0.,s*.35),mp=(m-.5)*vec2(r.x/r.y,1.);float d=length(u0-mp);vec2 q=u*2.6+(.35*exp(-d*3.)+b*.6*exp(-d*2.))*vec2(sin(t*3.-d*14.),cos(t*3.-d*14.));vec3 c;\nif(k<.5){vec2 a=q*.8;float H=h(a),e=.02;vec3 n=normalize(vec3(h(a+vec2(e,0.))-H,h(a+vec2(0.,e))-H,.035));vec3 L=normalize(vec3(-.5,.6,.7));float df=dot(n,L)*.5+.5,sp=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),36.);c=mix(vec3(.01,.05,.05),vec3(.05,.5,.44),df*df)+vec3(.9,.92,.3)*sp*1.3+vec3(0.,.25,.2)*pow(1.-n.z,2.);}\nelse if(k<1.5){vec2 w=q*.7;w+=vec2(h(w+vec2(0.,t*.2)),h(w+vec2(5.2,1.3)));float f=h(w*1.5+3.*vec2(h(w),h(w+9.))),z=abs(f-.15),hh=hs(floor(gl_FragCoord.xy));c=mix(vec3(.02,.14,.11),vec3(.2,.55,.45),smoothstep(-.6,.6,f))+vec3(.7,.8,.7)*smoothstep(.4,.8,f)*.35;float v=1.-smoothstep(0.,.07,z),fl=step(.975,hh)*(1.-smoothstep(0.,.3,z))*(.6+.4*sin(t*4.+hh*40.));c+=vec3(1.,.72,.25)*(v*1.1+fl*1.5);}\nelse{float H=h(q*.9+vec2(0.,t*.15)),bd=sin(H*14.+q.x*.8);c=mix(vec3(.02,.3,.1),vec3(.05,.62,.25),.5+.5*bd);c=mix(c,vec3(.85,.6,.12),smoothstep(.5,.9,sin(H*7.+1.))*.9);c+=vec3(.85,.95,.85)*pow(1.-abs(bd),14.)*.8;c*=(smoothstep(-.8,-.1,H)*.8+.2)*.68;}\ngl_FragColor=vec4(c*(1.-.45*dot(u0,u0)),1.);}';
+var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}',fs='#define OCT '+((mob||lo)?3:4)+'\n#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\nuniform vec2 r,m;uniform float t,s,b,k;\nfloat h(vec2 p){float a=0.,w=.5;for(int i=0;i<OCT;i++){a+=w*sin(p.x+sin(p.y*1.3+t*.4))*cos(p.y-sin(p.x*.8-t*.3));p=mat2(1.6,1.2,-1.2,1.6)*p;w*=.5;}return a;}\nfloat hs(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}\nvoid main(){vec2 u0=(gl_FragCoord.xy-.5*r)/r.y,u=u0+vec2(0.,s*.35),mp=(m-.5)*vec2(r.x/r.y,1.);float d=length(u0-mp);vec2 q=u*2.6+(.35*exp(-d*3.)+b*.6*exp(-d*2.))*vec2(sin(t*3.-d*14.),cos(t*3.-d*14.));vec3 c;\nif(k<.5){vec2 a=q*.8;float H=h(a),e=.02;vec3 n=normalize(vec3(h(a+vec2(e,0.))-H,h(a+vec2(0.,e))-H,.035));vec3 L=normalize(vec3(-.5,.6,.7));float df=dot(n,L)*.5+.5,sp=pow(max(dot(reflect(-L,n),vec3(0.,0.,1.)),0.),36.);c=mix(vec3(.01,.05,.05),vec3(.05,.5,.44),df*df)+vec3(.9,.92,.3)*sp*1.3+vec3(0.,.25,.2)*pow(1.-n.z,2.);}\nelse if(k<1.5){vec2 w=q*.7;w+=vec2(h(w+vec2(0.,t*.2)),h(w+vec2(5.2,1.3)));float f=h(w*1.5+3.*vec2(h(w),h(w+9.))),z=abs(f-.15),hh=hs(floor(w*9.)),gd=1.-smoothstep(.04,.36,length(fract(w*9.)-.5));c=mix(vec3(.02,.14,.11),vec3(.2,.55,.45),smoothstep(-.6,.6,f))+vec3(.7,.8,.7)*smoothstep(.4,.8,f)*.35;float v=1.-smoothstep(0.,.09,z),fl=step(.9,hh)*gd*(.45+.55*sin(t*3.+hh*40.));c+=vec3(1.,.72,.25)*(v*1.1+fl*1.5);}\nelse{float H=h(q*.9+vec2(0.,t*.15)),bd=sin(H*14.+q.x*.8);c=mix(vec3(.02,.3,.1),vec3(.05,.62,.25),.5+.5*bd);c=mix(c,vec3(.85,.6,.12),smoothstep(.5,.9,sin(H*7.+1.))*.9);c+=vec3(.85,.95,.85)*pow(1.-abs(bd),14.)*.8;c*=(smoothstep(-.8,-.1,H)*.8+.2)*.68;}\ngl_FragColor=vec4(c*(1.-.45*dot(u0,u0))+(hs(gl_FragCoord.xy+t)-.5)/200.,1.);}';
 function sh(t,s){var o=g.createShader(t);g.shaderSource(o,s);g.compileShader(o);return o}
 var pr=g.createProgram();g.attachShader(pr,sh(g.VERTEX_SHADER,vs));g.attachShader(pr,sh(g.FRAGMENT_SHADER,fs));g.linkProgram(pr);
 if(g.getProgramParameter(pr,g.LINK_STATUS)){
 g.useProgram(pr);var bf=g.createBuffer();g.bindBuffer(g.ARRAY_BUFFER,bf);g.bufferData(g.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),g.STATIC_DRAW);var l=g.getAttribLocation(pr,'p');g.enableVertexAttribArray(l);g.vertexAttribPointer(l,2,g.FLOAT,!1,0,0);
 var U={};['r','m','t','s','b','k'].forEach(function(k){U[k]=g.getUniformLocation(pr,k)});
-var sc=mob?.28:.4,mx=.5,my=.5,tx=.5,ty=.5,pl=0,run=!1,lt=0,slow=0,t0=performance.now();
+var sc=mob?.55:.85,SCMIN=.4,fpsGap=mob?28:14,mx=.5,my=.5,tx=.5,ty=.5,pl=0,run=!1,lt=0,slow=0,t0=performance.now();
 function rz(){c.width=Math.max(2,innerWidth*sc|0);c.height=Math.max(2,innerHeight*sc|0);g.viewport(0,0,c.width,c.height)}rz();
 function kick(){if(!run&&!document.hidden){run=!0;lt=0;requestAnimationFrame(f)}}
 addEventListener('resize',function(){rz();kick()});
 function mvp(e){tx=e.clientX/innerWidth;ty=1-e.clientY/innerHeight}
-var hero=document.getElementById('home'),hv=hero?scrollY<=hero.offsetHeight-innerHeight:!1;function chk(){hv=hero?scrollY<=hero.offsetHeight-innerHeight:!1;if(!hv)kick()}addEventListener('scroll',chk,{passive:!0});addEventListener('resize',chk);addEventListener('pointermove',mvp,{passive:!0});addEventListener('pointerdown',function(e){mvp(e);pl=1.4;kick()},{passive:!0});
+var hero=document.getElementById('home'),hv=hero?scrollY<=hero.offsetHeight-innerHeight:!1;var lsy=scrollY;function chk(){var dy=Math.abs(scrollY-lsy);lsy=scrollY;pl=Math.min(1.2,pl+dy*.0014);hv=hero?scrollY<=hero.offsetHeight-innerHeight:!1;if(!hv)kick()}addEventListener('scroll',chk,{passive:!0});addEventListener('resize',chk);addEventListener('pointermove',mvp,{passive:!0});addEventListener('pointerdown',function(e){mvp(e);pl=1.4;kick()},{passive:!0});
 document.addEventListener('visibilitychange',function(){if(document.hidden)run=!1;else kick()});
-function f(n){if(!run)return;if(hv&&!LD){run=!1;return}requestAnimationFrame(f);var dt=n-lt;if(dt<(mob?28:14))return;
-if(lt&&dt>(mob?45:24)){if(++slow>12&&sc>.15){sc*=.8;slow=0;rz()}}else if(slow>0)slow--;lt=n;mx+=(tx-mx)*.06;my+=(ty-my)*.06;pl*=.94;
+function f(n){if(!run)return;if(hv&&!LD){run=!1;return}requestAnimationFrame(f);var dt=n-lt;if(dt<fpsGap)return;
+if(lt&&dt>(mob?45:24)){if(++slow>12){slow=0;if(sc>SCMIN){sc=Math.max(SCMIN,sc*.85);rz()}else fpsGap=Math.min(40,fpsGap+8)}}else if(slow>0)slow--;lt=n;mx+=(tx-mx)*.06;my+=(ty-my)*.06;pl*=.94;
 g.uniform2f(U.r,c.width,c.height);g.uniform2f(U.m,mx,my);g.uniform1f(U.t,(n-t0)/1000);g.uniform1f(U.s,scrollY/innerHeight);g.uniform1f(U.b,pl);g.uniform1f(U.k,LD?0:K);g.drawArrays(g.TRIANGLES,0,3);if(rm)run=!1}
 var LD=!1;
 
@@ -283,7 +283,7 @@ kick();
 var sw=document.createElement('div');sw.id='lqsw';sw.setAttribute('role','group');sw.setAttribute('aria-label','Liquid background style');
 ['Silk','Marble','Chrome'].forEach(function(n,i){var b=document.createElement('button');b.textContent=n;b.type='button';b.setAttribute('aria-pressed',i==K);if(i==K)b.className='on';
 b.onclick=function(){if(i==K)return;[].forEach.call(sw.children,function(x,j){x.className=j==i?'on':'';x.setAttribute('aria-pressed',j==i)});c.style.opacity=0;setTimeout(function(){K=i;pl=1.5;try{localStorage.setItem('liq',i)}catch(e){}kick();c.style.opacity=1},320)};sw.appendChild(b)});
-document.body.appendChild(sw);var mq=matchMedia('(max-width:800px)');function vis(){sw.classList.toggle('hid',mq.matches&&scrollY<innerHeight*.75)}addEventListener('scroll',vis,{passive:!0});addEventListener('resize',vis);vis();
+sw.title='Tip: press S, M or C to switch background';document.body.appendChild(sw);var mq=matchMedia('(max-width:800px)');function vis(){sw.classList.toggle('hid',mq.matches&&scrollY<innerHeight*.75)}addEventListener('scroll',vis,{passive:!0});addEventListener('resize',vis);vis();
 }else{c.remove()}}else c.remove();
 /* click bubbles */
 if(!rm)addEventListener('pointerdown',function(e){if(e.target.id=='c')return;for(var i=0;i<5;i++){var d=document.createElement('u'),z=6+Math.random()*12|0;d.className='pb';d.style.cssText='left:'+e.clientX+'px;top:'+e.clientY+'px;width:'+z+'px;height:'+z+'px;--dx:'+((Math.random()-.5)*130|0)+'px;--dy:-'+(50+Math.random()*80|0)+'px';document.body.appendChild(d);setTimeout(function(x){x.remove()},1300,d)}},{passive:!0});
@@ -321,4 +321,46 @@ if(fine&&!reduce){
   document.addEventListener('pointerover',function(e){ring.classList.toggle('big',!!(e.target.closest&&e.target.closest('a,button,.btn')))});
   (function lp(){if(on&&!document.hidden){rx+=(x-rx)*.18;ry+=(y-ry)*.18;ring.style.transform='translate3d('+rx.toFixed(1)+'px,'+ry.toFixed(1)+'px,0)'}requestAnimationFrame(lp)})();
   $$('.btn').forEach(function(b){b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+((e.clientX-r.left-r.width/2)*.14).toFixed(1)+'px,'+((e.clientY-r.top-r.height/2)*.22).toFixed(1)+'px)'},{passive:true});b.addEventListener('pointerleave',function(){b.style.transform=''})})}
+})()}catch(e){console.error(e)}
+
+try{(function(){
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))},reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var tt=document.createElement('div');tt.className='ix-toast';tt.setAttribute('role','status');document.body.appendChild(tt);var tT=0;function toast(m){tt.textContent=m;tt.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){tt.classList.remove('show')},1800)}
+/* keyboard shortcuts: S / M / C switch the background, ? shows help */
+addEventListener('keydown',function(e){if(e.ctrlKey||e.metaKey||e.altKey)return;var t=e.target;if(t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName))return;var k=e.key.toLowerCase(),i={s:0,m:1,c:2}[k],b=$$('#lqsw button');
+  if(i!==undefined&&b[i]){b[i].click();toast(['Silk','Marble','Chrome'][i]+' background')}else if(e.key==='?'){toast('Press S, M or C to change the background')}});
+/* side dots: jump between sections */
+var ids=[];$$('.nav a[href^="#"],header a[href^="#"]').forEach(function(a){var id=a.getAttribute('href').slice(1);if(id&&document.getElementById(id)&&ids.indexOf(id)<0&&id!=='home')ids.push(id)});
+if(ids.length){var dn=document.createElement('nav');dn.className='ix-dots';dn.setAttribute('aria-label','Sections');ids.unshift('home');ids=ids.filter(function(id){return document.getElementById(id)});
+  ids.forEach(function(id){var a=document.createElement('a');a.href='#'+id;a.setAttribute('aria-label',id);a.innerHTML='<span>'+id.replace(/-/g,' ')+'</span>';dn.appendChild(a)});document.body.appendChild(dn);
+  if('IntersectionObserver' in window){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)$$('a',dn).forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})})},{rootMargin:'-45% 0px -50% 0px'});ids.forEach(function(id){so.observe(document.getElementById(id))})}}
+/* Ask St. Mary's: a small helper that answers common questions */
+var S={tel:'+91 94504 82895 / 0548-2222612',mail:'stmaryconventschoolgzp@gmail.com',addr:"Tadvanva, Ghazipur, Uttar Pradesh 233001",yt:'https://youtube.com/@st.marysconventschoolghazi4649?si=TslvxI4Q3ZIZOz5B'};
+function stat(i,d){var b=$$('.hero-stat b')[i];return b?b.textContent.trim():d}
+var KB=[[/hello|hi\b|hey|namaste/,'Hello! I can help with admissions, location, contact details and facilities. What would you like to know?'],
+[/admission|apply|enrol|enroll|seat|join/,'Admissions information is in the Admissions section. For forms, dates and availability please call the school office on '+S.tel+'.','#admissions','Open Admissions'],
+[/where|address|location|map|reach|direction/,"We are at "+S.addr+". The Contact section has a map and a satellite view.",'#contact','Open map'],
+[/phone|call|number|contact|talk/,'You can call the school office on '+S.tel+' or email '+S.mail+'.','#contact','Get in touch'],
+[/mail|email/,'Our email is '+S.mail+'.'],
+[/youtube|video|channel/,'Watch our school videos on YouTube: '+S.yt,S.yt,'Open YouTube'],
+[/founded|history|story|established|started|since|year/,'St. Mary\'s Convent School was established on 12 July 1982 in Tulsi Sagar, Ghazipur, and later moved to its Tadvanva campus at Vidya Niketan.','#story','Read our story'],
+[/classroom|class room|lab|facility|facilities|campus|building|library|ground/,'The school has '+stat(1,'many')+' classrooms and '+stat(2,'several')+' practical labs. See the Facilities and Campus sections, and try the 3D campus.','#facilities','See facilities'],
+[/principal|head|management/,'You can read the Principal\'s message in the Principal section.','#principal','Meet the Principal'],
+[/photo|gallery|picture|event|celebration/,'Browse school moments in the Gallery.','#gallery','Open Gallery'],
+[/rule|topper|result|notice|academic|handbook|syllabus|curriculum/,'The School Handbook covers About, Academics, Campus, Rules, Toppers and Notices.','#handbook','Open Handbook'],
+[/fee|fees|cost|tuition/,'Fee details are shared by the school office. Please call '+S.tel+'.'],
+[/time|timing|hour|open|holiday/,'For school timings and holidays, please check Notices in the Handbook or call '+S.tel+'.','#handbook','Open Handbook'],
+[/thank|thanks/,'You\'re welcome! Anything else I can help with?']];
+var fab=document.createElement('button');fab.className='ix-fab';fab.type='button';fab.setAttribute('aria-label','Ask St. Mary\'s');fab.setAttribute('aria-expanded','false');fab.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
+var pn=document.createElement('div');pn.className='ix-panel';pn.setAttribute('role','dialog');pn.setAttribute('aria-label','Ask St. Mary\'s');pn.innerHTML='<div class="ix-h"><b>Ask St. Mary\'s</b><span>Quick answers about the school</span></div><div class="ix-m" aria-live="polite"></div><div class="ix-q"></div><form class="ix-f"><input type="text" placeholder="Type your question" aria-label="Your question" autocomplete="off"><button type="submit" aria-label="Send">➤</button></form>';
+document.body.appendChild(pn);document.body.appendChild(fab);
+var mb=$('.ix-m',pn),qb=$('.ix-q',pn),inp=$('input',pn);
+function say(t,me,href,label){var m=document.createElement('div');m.className='ix-b'+(me?' me':'');m.textContent=t;if(href){var a=document.createElement('a');a.href=href;a.textContent=label+' →';if(/^http/.test(href)){a.target='_blank';a.rel='noopener noreferrer'}else a.addEventListener('click',function(){pn.classList.remove('open');fab.setAttribute('aria-expanded','false')});m.appendChild(document.createElement('br'));m.appendChild(a)}mb.appendChild(m);mb.scrollTop=mb.scrollHeight}
+function ask(q){say(q,true);var l=q.toLowerCase(),r=null;for(var i=0;i<KB.length;i++){if(KB[i][0].test(l)){r=KB[i];break}}
+  setTimeout(function(){r?say(r[1],false,r[2],r[3]):say('I\'m not sure about that. Please call the school office on '+S.tel+' or email '+S.mail+'.',false,'#contact','Contact us')},reduce?0:420)}
+say('Hi! I\'m the St. Mary\'s helper. Ask me about admissions, the campus or how to reach us.');
+['Admissions','Where is the school?','Contact','Our story','Facilities'].forEach(function(q){var b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',function(){ask(q)});qb.appendChild(b)});
+$('form',pn).addEventListener('submit',function(e){e.preventDefault();var v=inp.value.trim();if(!v)return;inp.value='';ask(v)});
+fab.addEventListener('click',function(){var o=!pn.classList.contains('open');pn.classList.toggle('open',o);fab.setAttribute('aria-expanded',o?'true':'false');if(o)setTimeout(function(){inp.focus()},250)});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&pn.classList.contains('open')){pn.classList.remove('open');fab.setAttribute('aria-expanded','false');fab.focus()}});
 })()}catch(e){console.error(e)}
